@@ -8,6 +8,19 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private GameObject[] tilePrefabs;
 
+    
+    private Point portalSpawn;
+  
+    private Point baseSpawn;
+
+    [SerializeField]
+    private GameObject portalPrefab;
+
+    [SerializeField]
+    private GameObject basePrefab;
+
+    public Dictionary<Point,TileScript> Tiles { get; set; }
+
     public float TileSize
     {
         get {return tilePrefabs[0].GetComponent<SpriteRenderer>().sprite.bounds.size.x; }
@@ -27,6 +40,7 @@ public class LevelManager : MonoBehaviour
 
     private void CreateLevel()
     {
+        Tiles = new Dictionary<Point, TileScript>();
 
         string[] mapData = ReadLevelText();
 
@@ -45,15 +59,20 @@ public class LevelManager : MonoBehaviour
             }
         }
 
+        SpawnPortal();
     }
 
     private void PlaceTile(string tileType,int x, int y,Vector3 worldStart)
     {
+
         int tileIndex = int.Parse(tileType);
 
-        GameObject newTile = Instantiate(tilePrefabs[tileIndex]);
+        TileScript newTile = Instantiate(tilePrefabs[tileIndex]).GetComponent<TileScript>();
 
-        newTile.transform.position = new Vector3(worldStart.x +( TileSize * x),worldStart.y - ( TileSize * y), 0);
+        newTile.Setup(new Point(x, y),new Vector3(worldStart.x + (TileSize * x), worldStart.y - (TileSize * y),0));
+
+        Tiles.Add(new Point(x, y), newTile);
+
     }
 
     private string[] ReadLevelText()
@@ -62,4 +81,13 @@ public class LevelManager : MonoBehaviour
         string data = bindData.text.Replace(Environment.NewLine, string.Empty);
         return data.Split('-');
     }
+
+
+    private void SpawnPortal()
+    {
+        portalSpawn = new Point(0,0);
+
+        Instantiate(portalPrefab, Tiles[portalSpawn].GetComponent<TileScript>().WorldPosition, Quaternion.identity);
+    }
+    //spawn Base
 }

@@ -166,6 +166,10 @@ MonoBehaviour:
   tilePrefabs:
   - {fileID: 6469707831955043555, guid: ea8f034b80265a849afde2bad874a0fb, type: 3}
   - {fileID: 2236209829078327275, guid: da4f25eda3bef804f80b02834128374e, type: 3}
+  portalPrefab: {fileID: 4192875748733506137, guid: 375fd722d18c6f34bb0d8d2df7935cbb,
+    type: 3}
+  basePrefab: {fileID: 6484753851139151077, guid: f065328aefb30ac4f9ef3c8b89c5459f,
+    type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
