@@ -60,6 +60,7 @@ public class LevelManager : MonoBehaviour
         }
 
         SpawnPortal();
+        SpawnBase();
     }
 
     private void PlaceTile(string tileType,int x, int y,Vector3 worldStart)
@@ -89,5 +90,11 @@ public class LevelManager : MonoBehaviour
 
         Instantiate(portalPrefab, Tiles[portalSpawn].GetComponent<TileScript>().WorldPosition, Quaternion.identity);
     }
-    //spawn Base
+    
+    private void SpawnBase()
+    {
+        baseSpawn = new Point(8,3);
+
+        Instantiate(basePrefab, Tiles[baseSpawn].GetComponent<TileScript>().WorldPosition, Quaternion.identity);
+    }
 }
