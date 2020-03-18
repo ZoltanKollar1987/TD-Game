@@ -19,6 +19,9 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField]
     private GameObject basePrefab;
 
+    [SerializeField]
+    private Transform map; 
+
     public Dictionary<Point,TileScript> Tiles { get; set; }
 
     public float TileSize
@@ -70,7 +73,7 @@ public class LevelManager : Singleton<LevelManager>
 
         TileScript newTile = Instantiate(tilePrefabs[tileIndex]).GetComponent<TileScript>();
 
-        newTile.Setup(new Point(x, y),new Vector3(worldStart.x + (TileSize * x), worldStart.y - (TileSize * y),0));
+        newTile.Setup(new Point(x, y),new Vector3(worldStart.x + (TileSize * x), worldStart.y - (TileSize * y),0),map);
 
         
 
