@@ -4,18 +4,9 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
+
     
-    public GameObject towerPrefab;
-
-    public GameObject TowerPrefab 
-    {
-        get
-        {
-            return towerPrefab;
-        }
-            
-    }
-
+    public TowerButton ClickBtn { get; private set; }
 
 
     // Start is called before the first frame update
@@ -29,4 +20,16 @@ public class GameManager : Singleton<GameManager>
     {
         
     }
+
+    public void PickTower(TowerButton towerBtn)
+    {
+        this.ClickBtn = towerBtn;
+        Hover.Instance.Activate(towerBtn.Sprite);
+    }
+
+    public void BuyTower()
+    {
+        ClickBtn = null;
+    }
+
 }
