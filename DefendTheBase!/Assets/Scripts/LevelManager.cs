@@ -5,6 +5,11 @@ using System;
 
 public class LevelManager : Singleton<LevelManager>
 {
+
+
+
+
+    /*
     [SerializeField]
     private GameObject[] tilePrefabs;
 
@@ -29,18 +34,9 @@ public class LevelManager : Singleton<LevelManager>
         get {return tilePrefabs[0].GetComponent<SpriteRenderer>().sprite.bounds.size.x; }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        CreateLevel();
-    }
+    /
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    
     private void CreateLevel()
     {
         Tiles = new Dictionary<Point, TileScript>();
@@ -100,4 +96,5 @@ public class LevelManager : Singleton<LevelManager>
 
         Instantiate(basePrefab, Tiles[baseSpawn].GetComponent<TileScript>().WorldPosition, Quaternion.identity);
     }
+    */
 }

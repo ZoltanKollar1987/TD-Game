@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : Singleton<GameManager>
 {
-
+    
     
     public TowerButton ClickBtn { get; set; }
 
@@ -31,6 +31,7 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
+        
         Currency = 5;
     }
 
@@ -48,6 +49,7 @@ public class GameManager : Singleton<GameManager>
             Hover.Instance.Activate(towerBtn.Sprite);
         }
      
+
     }
 
     public void BuyTower()

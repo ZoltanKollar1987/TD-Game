@@ -5,8 +5,8 @@ using UnityEngine.EventSystems;
 
 public class TileScript : MonoBehaviour
 {
-
-    public Point GridPosition { get; private set; }
+    
+    public Point GridPosition { get; set; }
 
     private Color32 fullColor = new Color32(255, 118, 118, 255);
 
@@ -15,6 +15,9 @@ public class TileScript : MonoBehaviour
     public bool IsEmpty { get; private set; }
 
     private SpriteRenderer spriteRenderer;
+
+    public SpriteRenderer SpriteRenderer { get; set; }
+
 
     public Vector2 WorldPosition
     {
@@ -29,7 +32,8 @@ public class TileScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        IsEmpty = true;
+        SpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -38,18 +42,37 @@ public class TileScript : MonoBehaviour
         
     }
 
+    /*
     public void Setup(Point gridPos,Vector3 worldPos,Transform parent)
     {
-        IsEmpty = true;
+        //IsEmpty = true;
         this.GridPosition = gridPos;
         transform.position = worldPos;
         transform.SetParent(parent);
-        LevelManager.Instance.Tiles.Add(gridPos, this);
+        
     }
-
+    */
     private void OnMouseOver()
     {
         
+        if (!EventSystem.current.IsPointerOverGameObject() && GameManager.Instance.ClickBtn != null)
+        {
+            if (IsEmpty)
+            {
+                ColorTile(emptyColor);
+            }
+            if (!IsEmpty)
+            {
+                ColorTile(fullColor);
+            }
+            else if (Input.GetMouseButtonDown(0))
+            {
+                PlaceTower();
+            }
+
+        }
+
+        /*
         if (!EventSystem.current.IsPointerOverGameObject() && GameManager.Instance.ClickBtn != null)
         {
             if (IsEmpty)
@@ -65,32 +88,34 @@ public class TileScript : MonoBehaviour
                 PlaceTower();
             }
         }
-  
+        */
+
+        
     }
 
     private void OnMouseExit()
     {
-        ColorTile(Color.white);
+        
+            ColorTile(Color.white);
+             
     }
 
     private void PlaceTower()
     {
-       
-       GameObject tower = (GameObject)Instantiate(GameManager.Instance.ClickBtn.TowerPrefab, transform.position, Quaternion.identity);
-       tower.GetComponent<SpriteRenderer>().sortingOrder = GridPosition.Y;
+        
+        GameObject tower = (GameObject)Instantiate(GameManager.Instance.ClickBtn.TowerPrefab, transform.position, Quaternion.identity);
+        tower.transform.SetParent(transform);
 
-       tower.transform.SetParent(transform);
+        IsEmpty = false;
 
-       IsEmpty = false;
+        GameManager.Instance.BuyTower();
 
-       ColorTile(Color.white);
+        ColorTile(Color.white);
 
-       GameManager.Instance.BuyTower();
     }
 
     private void ColorTile(Color newColor)
     {
-        spriteRenderer.color = newColor;
-    }
-
+        SpriteRenderer.color = newColor;
+    } 
 }
