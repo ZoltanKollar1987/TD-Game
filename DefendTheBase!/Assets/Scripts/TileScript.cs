@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class TileScript : MonoBehaviour
 {
-    
+
     public Point GridPosition { get; set; }
 
     private Color32 fullColor = new Color32(255, 118, 118, 255);
@@ -13,6 +13,8 @@ public class TileScript : MonoBehaviour
     private Color32 emptyColor = new Color32(96, 255, 90, 255);
 
     public bool IsEmpty { get; private set; }
+
+    private Tower myTower;
 
     private SpriteRenderer spriteRenderer;
 
@@ -23,7 +25,7 @@ public class TileScript : MonoBehaviour
     {
         get
         {
-            return new Vector2(transform.position.x + (GetComponent<SpriteRenderer>().bounds.size.x/2), transform.position.y - (GetComponent<SpriteRenderer>().bounds.size.y/2));
+            return new Vector2(transform.position.x + (GetComponent<SpriteRenderer>().bounds.size.x / 2), transform.position.y - (GetComponent<SpriteRenderer>().bounds.size.y / 2));
         }
     }
 
@@ -39,7 +41,7 @@ public class TileScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     /*
@@ -54,7 +56,7 @@ public class TileScript : MonoBehaviour
     */
     private void OnMouseOver()
     {
-        
+
         if (!EventSystem.current.IsPointerOverGameObject() && GameManager.Instance.ClickBtn != null)
         {
             if (IsEmpty)
@@ -71,25 +73,17 @@ public class TileScript : MonoBehaviour
             }
 
         }
-
-        /*
-        if (!EventSystem.current.IsPointerOverGameObject() && GameManager.Instance.ClickBtn != null)
+        else if (!EventSystem.current.IsPointerOverGameObject() && GameManager.Instance.ClickBtn == null && Input.GetMouseButtonDown(0))
         {
-            if (IsEmpty)
+            if (myTower !=null)
             {
-                ColorTile(emptyColor);
+                GameManager.Instance.SelectTower(myTower);
             }
-            if (!IsEmpty)
+            else
             {
-                ColorTile(fullColor);
-            }          
-            else if (Input.GetMouseButtonDown(0))
-            {
-                PlaceTower();
+                GameManager.Instance.DeselectTower();
             }
         }
-        */
-
         
     }
 
@@ -105,6 +99,8 @@ public class TileScript : MonoBehaviour
         
         GameObject tower = (GameObject)Instantiate(GameManager.Instance.ClickBtn.TowerPrefab, transform.position, Quaternion.identity);
         tower.transform.SetParent(transform);
+
+        this.myTower = tower.transform.GetChild(0).GetComponent<Tower>();
 
         IsEmpty = false;
 
