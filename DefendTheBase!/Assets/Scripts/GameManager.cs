@@ -23,6 +23,11 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private Text currencyTxt;
 
+    [SerializeField]
+    private Text scoreTxt;
+
+    private int score;
+
     public ObjectPool Pool { get; set; }
 
     public Portal portal;
@@ -62,6 +67,20 @@ public class GameManager : Singleton<GameManager>
         {
             this.currency = value;
             this.currencyTxt.text = value.ToString() + " <color=lime>$</color>";
+        }
+    }
+
+    public int Score
+    {
+        get
+        {
+            return score;
+        }
+        set
+        {
+            this.score = value;
+            this.scoreTxt.text = string.Format("Score:<color=lime>{0}</color>", score);
+
         }
     }
 
@@ -226,8 +245,9 @@ public class GameManager : Singleton<GameManager>
     
     public void RemoveMonster(Monster monster)
     {
-      
+       
         activeMonster.Remove(monster);
+        
 
         if (!WaveActive && !gameOver)
         {
@@ -244,6 +264,10 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
     public void Restart()
     {
         Time.timeScale = 1;

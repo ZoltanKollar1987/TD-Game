@@ -26,4 +26,9 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
+    public void Score()
+    {
+        SceneManager.LoadScene(2);
+    }
 }

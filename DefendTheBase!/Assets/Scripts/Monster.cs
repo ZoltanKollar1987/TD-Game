@@ -47,8 +47,8 @@ public class Monster : MonoBehaviour
             {
                 GameManager.Instance.RemoveMonster(this);
                 GameManager.Instance.Currency += 2;
-                Destroy(this.gameObject);                
-                               
+                Destroy(this.gameObject);
+                GameManager.Instance.Score += 100;               
             }
 
             
