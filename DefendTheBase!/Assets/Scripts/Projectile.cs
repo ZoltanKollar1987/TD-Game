@@ -28,6 +28,10 @@ public class Projectile : MonoBehaviour
 
     private void MoveToTarget()
     {
+        if (target == null)
+        {
+            return;
+        }
         if (target != null && target.IsActive)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, Time.deltaTime * parent.ProjectileSpeed);
@@ -36,6 +40,7 @@ public class Projectile : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
